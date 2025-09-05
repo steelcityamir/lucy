@@ -79,7 +79,7 @@ func (p *ProxyServer) Start(ctx context.Context) error {
 		// 	"timeout", p.config.RequestTimeout)
 
 		fmt.Printf("🚀 Lucy started on port %d (Ctrl-C to stop)\n", p.config.Port)
-		fmt.Printf("📝 Watching for requests...\n\n")
+		fmt.Printf("👀 Watching for requests...\n\n")
 
 		if err := p.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			serverErr <- fmt.Errorf("server failed to start: %w", err)
