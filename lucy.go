@@ -111,7 +111,7 @@ func (p *ProxyServer) Start(ctx context.Context) error {
 			"timeout", p.config.RequestTimeout)
 
 		fmt.Printf("🚀 Lucy started on port %d\n", p.config.Port)
-		fmt.Printf("📝 Watching for requests...\n\n")
+		fmt.Printf("👀 Watching for requests...\n\n")
 
 		if err := p.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			serverErr <- fmt.Errorf("server failed to start: %w", err)
@@ -277,16 +277,20 @@ func (p *ProxyServer) buildTargetURL(r *http.Request) (string, error) {
 }
 
 func (p *ProxyServer) createForwardedRequest(ctx context.Context, original *http.Request, targetURL string, body []byte) (*http.Request, error) {
-	bodyReader := strings.NewReader(string(body))
+	bodyReader := bytes.NewReader(body)
+
 	req, err := http.NewRequestWithContext(ctx, original.Method, targetURL, bodyReader)
 	if err != nil {
 		return nil, err
 	}
 
-	// Copy headers (excluding hop-by-hop headers)
-	for name, values := range original.Header {
-		if !isHopByHopHeader(name) {
-			req.Header[name] = values
+	// Deep copy headers
+	req.Header = original.Header.Clone()
+
+	// Strip hop-by-hop headers
+	for name := range req.Header {
+		if isHopByHopHeader(name) {
+			req.Header.Del(name)
 		}
 	}
 
@@ -328,7 +332,7 @@ func (p *ProxyServer) tunnelTraffic(clientConn, targetConn net.Conn, host string
 // Logging methods
 
 func (p *ProxyServer) logHTTPRequest(r *http.Request, body []byte) {
-	fmt.Printf("➡️ %s %s\n", r.Method, r.URL.String())
+	fmt.Printf("➡️ [%s] %s %s\n", ts(), r.Method, r.URL.String())
 
 	// Log interesting headers
 	headers := p.extractInterestingHeaders(r.Header)
@@ -343,14 +347,14 @@ func (p *ProxyServer) logHTTPRequest(r *http.Request, body []byte) {
 	}
 
 	// Structured log
-	p.logger.Info("HTTP request",
-		"method", r.Method,
-		"url", r.URL.String(),
-		"headers", headers,
-		"body_size", len(body))
+	// p.logger.Info("HTTP request",
+	// 	"method", r.Method,
+	// 	"url", r.URL.String(),
+	// 	"headers", headers,
+	// 	"body_size", len(body))
 }
 func (p *ProxyServer) logHTTPResponse(url string, resp *http.Response, body []byte, duration time.Duration) {
-	fmt.Printf("\n⬅️ %s %s (%v)\n", resp.Status, url, duration)
+	fmt.Printf("\n⬅️ [%s] %s %s (%v)\n", ts(), resp.Status, url, duration)
 
 	// Log interesting headers
 	headers := p.extractInterestingHeaders(resp.Header)
@@ -371,12 +375,16 @@ func (p *ProxyServer) logHTTPResponse(url string, resp *http.Response, body []by
 	fmt.Println("---")
 
 	// Structured log
-	p.logger.Info("HTTP response",
-		"status", resp.StatusCode,
-		"url", url,
-		"headers", headers,
-		"body_size", len(body),
-		"duration", duration)
+	// p.logger.Info("HTTP response",
+	// 	"status", resp.StatusCode,
+	// 	"url", url,
+	// 	"headers", headers,
+	// 	"body_size", len(body),
+	// 	"duration", duration)
+}
+
+func ts() string {
+	return time.Now().Format("2006-01-02T15:04:05.000-07:00")
 }
 
 func (p *ProxyServer) logError(url string, err error, duration time.Duration) {
