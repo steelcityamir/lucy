@@ -71,7 +71,26 @@ Download the latest release from [GitHub Releases](https://github.com/steelcitya
 
 ### Basic Usage
 ```bash
-lucy --port 8080
+$ ./lucy
+🚀 Lucy started on port 8080 (Ctrl-C to stop)
+👀 Watching for requests...
+```
+
+## Send an HTTP request to the proxy
+```bash
+curl -x http://localhost:8080 http://api.github.com/zen
+```
+
+## Output
+```
+[2025-09-05 12:06:37.737] ➡️ GET http://api.github.com/zen
+   User-Agent: curl/8.7.1
+   Accept: */*
+
+[2025-09-05 12:06:37.875] ⬅️ 200 OK http://api.github.com/zen (138.242833ms)
+   Content-Type: text/plain;charset=utf-8
+   Content-Length: 15
+   Response: Encourage flow.
 ```
 
 ## Configuration
@@ -107,22 +126,6 @@ For HTTPS traffic, Lucy creates secure tunnels and logs:
 
 > [!NOTE]
 > HTTPS request/response content is encrypted and cannot be logged by Lucy.
-
-## Example Output
-
-```
-🚀 Lucy started on port 8080 (Ctrl-C to stop)
-👀 Watching for requests...
-
-[2025-09-05 12:06:37.737] ➡️ GET http://api.github.com/zen
-   User-Agent: curl/8.7.1
-   Accept: */*
-
-[2025-09-05 12:06:37.875] ⬅️ 200 OK http://api.github.com/zen (138.242833ms)
-   Content-Type: text/plain;charset=utf-8
-   Content-Length: 15
-   Response: Encourage flow.
-```
 
 ## FAQ
 
