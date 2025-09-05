@@ -332,7 +332,7 @@ func (p *ProxyServer) tunnelTraffic(clientConn, targetConn net.Conn, host string
 // Logging methods
 
 func (p *ProxyServer) logHTTPRequest(r *http.Request, body []byte) {
-	fmt.Printf("➡️ [%s] %s %s\n", ts(), r.Method, r.URL.String())
+	fmt.Printf("[%s]\n➡️ %s %s\n", ts(), r.Method, r.URL.String())
 
 	// Log interesting headers
 	headers := p.extractInterestingHeaders(r.Header)
@@ -354,7 +354,7 @@ func (p *ProxyServer) logHTTPRequest(r *http.Request, body []byte) {
 	// 	"body_size", len(body))
 }
 func (p *ProxyServer) logHTTPResponse(url string, resp *http.Response, body []byte, duration time.Duration) {
-	fmt.Printf("\n⬅️ [%s] %s %s (%v)\n", ts(), resp.Status, url, duration)
+	fmt.Printf("\n[%s]\n⬅️ %s %s (%v)\n", ts(), resp.Status, url, duration)
 
 	// Log interesting headers
 	headers := p.extractInterestingHeaders(resp.Header)
@@ -384,7 +384,7 @@ func (p *ProxyServer) logHTTPResponse(url string, resp *http.Response, body []by
 }
 
 func ts() string {
-	return time.Now().Format("2006-01-02T15:04:05.000-07:00")
+	return time.Now().Format("2006-01-02 15:04:05.000")
 }
 
 func (p *ProxyServer) logError(url string, err error, duration time.Duration) {
