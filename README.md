@@ -37,17 +37,13 @@ Your App → Lucy → Internet
 # Clone and build
 git clone https://github.com/steelcityamir/lucy
 cd lucy
-go build -o lucy
+go build -o lucy ./cmd/lucy
 
 # Start the proxy (default port is 8080)
 ./lucy
 
-# Configure your app to use the proxy
-export HTTP_PROXY=http://localhost:8080
-export HTTPS_PROXY=http://localhost:8080
-
-# Make requests and watch the magic ✨
-curl https://api.github.com/zen
+# Make request to the proxy
+curl -x http://localhost:8080 http://api.github.com/zen
 ```
 
 ## Installation
