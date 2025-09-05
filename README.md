@@ -104,7 +104,9 @@ For HTTP traffic, Lucy can see and log:
 For HTTPS traffic, Lucy creates secure tunnels and logs:
 - Connection establishment to target hosts
 - Connection duration and timing
-- ⚠️ **Note**: HTTPS request/response content is encrypted and cannot be logged
+
+> [!NOTE]
+> HTTPS request/response content is encrypted and cannot be logged by Lucy.
 
 ## Example Output
 
