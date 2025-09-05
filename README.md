@@ -111,16 +111,17 @@ For HTTPS traffic, Lucy creates secure tunnels and logs:
 ## Example Output
 
 ```
-🚀 Lucy started on port 8080
+🚀 Lucy started on port 8080 (Ctrl-C to stop)
 👀 Watching for requests...
 
-➡️ [2025-09-05T11:06:24.735-04:00] GET http://api.github.com/zen
+[2025-09-05 12:06:37.737] ➡️ GET http://api.github.com/zen
    User-Agent: curl/8.7.1
    Accept: */*
 
-⬅️ [2025-09-05T11:06:24.866-04:00] 200 OK http://api.github.com/zen (131.242292ms)
+[2025-09-05 12:06:37.875] ⬅️ 200 OK http://api.github.com/zen (138.242833ms)
    Content-Type: text/plain;charset=utf-8
-   Response: Approachable is better than simple.
+   Content-Length: 15
+   Response: Encourage flow.
 ```
 
 ## FAQ
