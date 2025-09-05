@@ -39,8 +39,8 @@ git clone https://github.com/steelcityamir/lucy
 cd lucy
 go build -o lucy
 
-# Start the proxy
-./lucy --port 8080
+# Start the proxy (default port is 8080)
+./lucy
 
 # Configure your app to use the proxy
 export HTTP_PROXY=http://localhost:8080
