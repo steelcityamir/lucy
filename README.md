@@ -52,8 +52,8 @@ go install
 go install github.com/steelcityamir/lucy@latest
 ```
 
-### Download Binary
-Download the latest release from [GitHub Releases](https://github.com/steelcityamir/lucy/releases).
+<!-- ### Download Binary
+Download the latest release from [GitHub Releases](https://github.com/steelcityamir/lucy/releases). -->
 
 ## Usage
 
