@@ -74,11 +74,11 @@ func (p *ProxyServer) Start(ctx context.Context) error {
 
 	serverErr := make(chan error, 1)
 	go func() {
-		p.logger.Info("Starting HTTP debug proxy",
-			"port", p.config.Port,
-			"timeout", p.config.RequestTimeout)
+		// p.logger.Info("Starting HTTP debug proxy",
+		// 	"port", p.config.Port,
+		// 	"timeout", p.config.RequestTimeout)
 
-		fmt.Printf("🚀 Lucy started on port %d\n", p.config.Port)
+		fmt.Printf("🚀 Lucy started on port %d (Ctrl-C to stop)\n", p.config.Port)
 		fmt.Printf("📝 Watching for requests...\n\n")
 
 		if err := p.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
@@ -89,8 +89,8 @@ func (p *ProxyServer) Start(ctx context.Context) error {
 	select {
 	case err := <-serverErr:
 		return err
-	case sig := <-sigChan:
-		p.logger.Info("Received shutdown signal", "signal", sig)
+	case <-sigChan:
+		//p.logger.Info("Received shutdown signal", "signal", sig)
 		return p.shutdown(ctx)
 	case <-ctx.Done():
 		return p.shutdown(ctx)
@@ -100,11 +100,12 @@ func (p *ProxyServer) Start(ctx context.Context) error {
 func (p *ProxyServer) shutdown(ctx context.Context) error {
 	shutdownCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
-	p.logger.Info("Shutting down proxy server...")
+	fmt.Printf("\n🚀 Lucy shutting down")
+	//p.logger.Info("Shutting down proxy server...")
 	if err := p.server.Shutdown(shutdownCtx); err != nil {
-		return fmt.Errorf("server shutdown failed: %w", err)
+		return fmt.Errorf("shutdown failed: %w", err)
 	}
-	p.logger.Info("Proxy server stopped")
+	//p.logger.Info("Proxy server stopped")
 	return nil
 }
 

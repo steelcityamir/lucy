@@ -2,6 +2,7 @@ package proxy
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 )
 
@@ -23,12 +24,13 @@ func PrettyLogRequest(method, url string, headers map[string]string, body string
 
 // PrettyLogResponse prints a human-readable response log
 func PrettyLogResponse(status int, url string, headers map[string]string, body string, duration time.Duration) {
-	fmt.Printf("\n[%s] ⬅️ %d %s (%v)\n", timestamp(), status, url, duration)
+	statusText := http.StatusText(status) // Get status name like "OK", "Not Found"
+	fmt.Printf("\n[%s] ⬅️ %d %s %s (%v)\n", timestamp(), status, statusText, url, duration)
 	for k, v := range headers {
 		fmt.Printf("   %s: %s\n", k, v)
 	}
 	if len(body) > 0 {
 		fmt.Printf("   Response: %s\n", body)
 	}
-	fmt.Println("---")
+	fmt.Println("───────────────────────────────")
 }
