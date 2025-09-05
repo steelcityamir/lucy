@@ -58,7 +58,7 @@ Download the latest release from [GitHub Releases](https://github.com/steelcitya
 ## Usage
 
 ### Basic Usage
-```bash
+```
 $ ./lucy
 🚀 Lucy started on port 8080 (Ctrl-C to stop)
 👀 Watching for requests...
