@@ -23,14 +23,6 @@ A lightweight HTTP debugging proxy for developers. See exactly what your applica
 - **📊 API Usage Monitoring** - Track which endpoints are being used
 - **🧪 Development & Testing** - Monitor requests during development
 
-## How It Works
-
-Lucy acts as an HTTP proxy between your application and the internet:
-
-```
-Your App → Lucy → Internet
-```
-
 ## Quick Start
 
 ```bash
