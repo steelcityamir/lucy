@@ -74,14 +74,16 @@ Download the latest release from [GitHub Releases](https://github.com/steelcitya
 lucy --port 8080
 ```
 
-### Configuration Options
-```bash
-lucy \
-  --port 9000 \
-  --timeout 60s \
-  --server-timeout 30s \
-  --max-body-size 50MB
-```
+## Configuration
+
+### Command Line Flags
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--port` | 8080 | Port to listen on |
+| `--timeout` | 30s | Request timeout |
+| `--server-timeout` | 30s | Server read/write timeout |
+| `--max-body-size` | 10MB | Maximum request/response body size |
 
 ### Environment Variables
 You can also configure using environment variables:
