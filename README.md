@@ -108,24 +108,15 @@ For HTTPS traffic, Lucy creates secure tunnels and logs:
 
 ```
 🚀 Lucy started on port 8080
-💡 Set HTTP_PROXY=http://localhost:8080
-📝 Watching for requests...
+👀 Watching for requests...
 
-📤 GET https://api.github.com/user
-   Authorization: Bearer ghp_xyz...
-   Accept: application/json
-   
-📥 200 OK https://api.github.com/user (324ms)
-   Content-Type: application/json
-   Response: {
-     "login": "username",
-     "id": 12345,
-     "type": "User"
-   }
----
+➡️ [2025-09-05T11:06:24.735-04:00] GET http://api.github.com/zen
+   User-Agent: curl/8.7.1
+   Accept: */*
 
-🔒 CONNECT api.stripe.com:443
-🔒 CONNECT api.stripe.com:443 closed (1.2s)
+⬅️ [2025-09-05T11:06:24.866-04:00] 200 OK http://api.github.com/zen (131.242292ms)
+   Content-Type: text/plain;charset=utf-8
+   Response: Approachable is better than simple.
 ```
 
 ## FAQ
